@@ -18,7 +18,7 @@ app.add_middleware(
 def home():
     conn = connection()
     cursor = conn.cursor()
-    query = "select * from product"
+    query = "select * from product_items"
     cursor.execute(query)
     data = cursor.fetchall()
     return data

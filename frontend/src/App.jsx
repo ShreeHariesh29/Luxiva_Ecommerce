@@ -20,7 +20,9 @@ function App() {
       {data.map((item, index)=> (
         <div>
           <p>{item.name}</p>
+          <p>{item.discription}</p>
           <p>{item.price}</p>
+          <p>{item.quantaty}</p>
         </div>
       ))}
     </div>
