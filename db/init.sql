@@ -1,5 +1,7 @@
 create database luxiva_ecommerce;
+
 use luxiva_ecommerce;
+
 create table product_items(
 id INT auto_increment NOT NULL primary key,
 name varchar(30),

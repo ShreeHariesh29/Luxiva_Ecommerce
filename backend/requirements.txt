@@ -2,3 +2,5 @@ fastapi
 uvicorn
 PyMySQL
 python-dotenv
+pycryptodome
+cryptography
