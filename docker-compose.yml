@@ -1,30 +1,25 @@
-version: '3.8'
-
 services:
-  backend:
-    build: ./backend
-    ports:
-      - "8000:8000"
-    env_file:
-      - .env
-    depends_on:
-      - db
-    volumes:
-      - ./db/encrypted.sql:/encrypted.sql                # mounted directly
-      - db_init:/docker-entrypoint-initdb.d              # shared with DB container
-
-  db:
-    image: mysql:latest
-    container_name: mysql-db
+  mysql_db:
+    image: mysql:8.0
+    container_name: mysql_db
+    restart: always
     environment:
       MYSQL_ROOT_PASSWORD: 1234
-      MYSQL_DATABASE: newecommerce
+      MYSQL_DATABASE: luxiva_ecommerce
     ports:
       - "3307:3306"
     volumes:
-      - db_data:/var/lib/mysql
-      - db_init:/docker-entrypoint-initdb.d              # same shared volume
+      - ./mysql/init.sql.b64:/docker-entrypoint-initdb.d/init.sql.b64
+      - ./mysql/decode_and_copy.sh:/docker-entrypoint.sh
+    command: --init-file /docker-entrypoint-initdb.d/init.sql
 
-volumes:
-  db_data:
-  db_init:
+  fastapi_app:
+    build: ./backend                        # <--- updated from ./app to ./backend
+    image: backend_fastapi_shree:1.0          
+    container_name: fastapi_app
+    ports:
+      - "8000:8000"
+    depends_on:
+      - mysql_db
+    env_file:
+      - ./backend/.env

@@ -4,6 +4,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from connector import connection
 
 
+
 app = FastAPI()
 
 app.add_middleware(
@@ -16,11 +17,13 @@ app.add_middleware(
 
 @app.get("/home")
 def home():
+    print("Database initialization done")
     conn = connection()
     cursor = conn.cursor()
     query = "select * from product_items"
     cursor.execute(query)
     data = cursor.fetchall()
+
     return data
 
 if __name__ == "__main__":

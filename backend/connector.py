@@ -16,6 +16,7 @@ def connection():
             port=int(os.getenv("DB_PORT")),
             cursorclass=pymysql.cursors.DictCursor
         )
+        print("DB Connected")
         return connector
     except Exception as e:
         raise Exception("Error in database connection") from e
